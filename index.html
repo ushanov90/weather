@@ -4,24 +4,35 @@
 <meta charset="UTF-8">
 <title>Погода в Ёнском</title>
 <style>
-  html,body{margin:0;padding:0;background:#000;text-align:center;}
-  img{max-width:100%;height:auto;padding-top:20px;}
+  html,body{margin:0;padding:0;background:#000;color:#fff;font-family:monospace;}
+  pre{padding:20px;font-size:14px;white-space:pre;line-height:1.2;}
 </style>
 </head>
 <body>
 
-<img id="pogoda">
+<pre id="view">Загрузка 3 дней прогноза...</pre>
 
 <script>
-  var ч1 = "https://";
-  var ч2 = "wttr.in/";
+  var ч1 = "https://allorigins.win";
+  var ч2 = "https://wttr.in";
   var шир = "67.58";
   var дол = "31.15";
-  // Добавили _3 для принудительных 3 дней:
-  var хв = "_3.png?lang=ru&M";
+  var хв = "?lang=ru%26M"; // %26 это знак & для прокси
 
-  var pic = document.getElementById('pogoda');
-  pic.src = ч1 + ч2 + шир + "," + дол + хв;
+  var target = ч2 + шир + "," + dол + хв;
+  var url = ч1 + encodeURIComponent(target);
+
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      document.getElementById('view').innerHTML = data.contents;
+    })
+    .catch(() => {
+      document.getElementById('view').innerText = 'Ошибка сети.';
+    });
+
+  // Обновление страницы раз в 3 часа
+  setTimeout(function(){ location.reload(); }, 10800000);
 </script>
 
 </body>
