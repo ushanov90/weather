@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Погода в Ёнском</title>
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: #000; color: #fff; font-family: monospace; }
+  pre { padding: 20px; font-size: 14px; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<pre id="view">Загрузка погоды...</pre>
+<script>
+  // Ссылка разбита на части, чтобы не прятаться за экран:
+  var p1 = "https://wttr.in";
+  var p2 = "~67.58";
+  var p3 = "%20";
+  var p4 = "31.15";
+  var p5 = "?lang=ru&M";
+
+  var fullUrl = p1 + p2 + p3 + p4 + p5;
+
+  fetch(fullUrl)
+    .then(r => r.text())
+    .then(data => {
+      var clean = data.replace(/<\/?[^>]+(>|$)/g, "");
+      document.getElementById('view').innerText = clean;
+    })
+    .catch(() => {
+      document.getElementById('view').innerText = 'Ошибка загрузки.';
+    });
+
+  // Автоматическое обновление страницы раз в 3 часа
+  setTimeout(function(){ location.reload(); }, 10800000);
+</script>
+</body>
+</html>
