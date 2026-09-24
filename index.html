@@ -4,34 +4,26 @@
 <meta charset="UTF-8">
 <title>Погода в Ёнском</title>
 <style>
-  html,body{margin:0;padding:0;background:#000;color:#fff;font-family:monospace;}
-  pre{padding:20px;font-size:14px;white-space:pre;line-height:1.2;}
+  html,body{margin:0;padding:0;height:100%;overflow:hidden;background:#000;}
+  iframe{width:100%;height:100%;border:none;}
 </style>
 </head>
 <body>
 
-<pre id="view">Загрузка 3 дней прогноза...</pre>
+<iframe id="okno"></iframe>
 
 <script>
-  var ч1 = "https://allorigins.win";
-  var ч2 = "https://wttr.in";
-  var шир = "67.58";
-  var дол = "31.15";
-  var хв = "?lang=ru%26M"; // %26 это знак & для прокси
+  // Ваша точная ссылка, разбитая на короткие части:
+  var ч1 = "https://wttr.in";
+  var ч2 = "~67.58";
+  var ч3 = "%20";
+  var ч4 = "31.15";
+  var ч5 = "?lang=ru&M";
 
-  var target = ч2 + шир + "," + dол + хв;
-  var url = ч1 + encodeURIComponent(target);
+  // Скрипт соединяет куски и запускает сайт
+  document.getElementById("okno").src = ч1 + ч2 + ч3 + ч4 + ч5;
 
-  fetch(url)
-    .then(r => r.json())
-    .then(data => {
-      document.getElementById('view').innerHTML = data.contents;
-    })
-    .catch(() => {
-      document.getElementById('view').innerText = 'Ошибка сети.';
-    });
-
-  // Обновление страницы раз в 3 часа
+  // Автоматическое обновление раз в 3 часа
   setTimeout(function(){ location.reload(); }, 10800000);
 </script>
 
