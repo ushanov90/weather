@@ -4,33 +4,23 @@
 <meta charset="UTF-8">
 <title>Погода в Ёнском</title>
 <style>
-  html, body { margin: 0; padding: 0; height: 100%; background: #000; color: #fff; font-family: monospace; }
-  pre { padding: 20px; font-size: 14px; white-space: pre-wrap; }
+  html,body{margin:0;padding:0;background:#000;text-align:center;}
+  img{max-width:100%;height:auto;padding-top:20px;}
 </style>
 </head>
 <body>
-<pre id="view">Загрузка погоды...</pre>
+
+<img src="https://wttr.in"
+     alt="67.58,31.15"
+     src2="?lang=ru&M_3.png">
+
 <script>
-  // Здесь уже железно прописано рабочее зеркало v2:
-  var p1 = "https://wttr.in";
-  var p2 = "~67.58";
-  var p3 = "%20";
-  var p4 = "31.15";
-  var p5 = "?lang=ru&M";
-
-  var fullUrl = p1 + p2 + p3 + p4 + p5;
-
-  fetch(fullUrl)
-    .then(r => r.text())
-    .then(data => {
-      var clean = data.replace(/<\/?[^>]+(>|$)/g, "");
-      document.getElementById('view').innerText = clean;
-    })
-    .catch(() => {
-      document.getElementById('view').innerText = 'Ошибка загрузки.';
-    });
-
-  setTimeout(function(){ location.reload(); }, 10800000);
+  // Этот скрипт сам соберет короткие строчки в одну картинку:
+  var Картинка = document.getElementsByTagName('img')[0];
+  Картинка.src = Картинка.getAttribute('src') 
+               + Картинка.getAttribute('alt') 
+               + Картинка.getAttribute('src2');
 </script>
+
 </body>
 </html>
