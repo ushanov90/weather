@@ -11,7 +11,7 @@
 <body>
 <pre id="view">Загрузка погоды...</pre>
 <script>
-  // Ссылка разбита на части, чтобы не прятаться за экран:
+  // Здесь уже железно прописано рабочее зеркало v2:
   var p1 = "https://wttr.in";
   var p2 = "~67.58";
   var p3 = "%20";
@@ -30,7 +30,6 @@
       document.getElementById('view').innerText = 'Ошибка загрузки.';
     });
 
-  // Автоматическое обновление страницы раз в 3 часа
   setTimeout(function(){ location.reload(); }, 10800000);
 </script>
 </body>
