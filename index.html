@@ -10,16 +10,19 @@
 </head>
 <body>
 
-<img src="https://wttr.in"
-     alt="67.58,31.15"
-     src2="?lang=ru&M_3.png">
+<img id="pogoda">
 
 <script>
-  // Этот скрипт сам соберет короткие строчки в одну картинку:
-  var Картинка = document.getElementsByTagName('img')[0];
-  Картинка.src = Картинка.getAttribute('src') 
-               + Картинка.getAttribute('alt') 
-               + Картинка.getAttribute('src2');
+  // Координаты Ёнского разбиты на супер-короткие части:
+  var ч1 = "https://";
+  var ч2 = "wttr.in/";
+  var шир = "67.58";
+  var дол = "31.15";
+  var хвост = "_3m.png?lang=ru";
+
+  // Скрипт собирает их вместе без ошибок
+  var pic = document.getElementById('pogoda');
+  pic.src = ч1 + ч2 + шир + "," + дол + хвост;
 </script>
 
 </body>
