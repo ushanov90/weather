@@ -1,43 +1,35 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<title>Погода в Ёнском</title>
-<style>
-  html,body{margin:0;padding:0;background:#000;color:#fff;font-family:monospace;}
-  pre{padding:20px;font-size:14px;white-space:pre;line-height:1.2;}
-</style>
-</head>
-<body>
+import urllib.request
+from http.server import BaseHTTPRequestHandler
 
-<pre id="view">Загрузка прогноза на 3 дня...</pre>
-
-<script>
-  // Ваша точная ссылка разбита по строчкам:
-  var ч1 = "https://";
-  var ч2 = "wttr.in/";
-  var ч3 = "~67.58";
-  var ч4 = "%20";
-  var ч5 = "31.15";
-  var ч6 = "?lang=ru&M";
-
-  var fullUrl = ч1 + ч2 + ч3 + ч4 + ч5 + ч6;
-
-  // Безопасный запрос без блокировок:
-  fetch(fullUrl, { mode: 'cors' })
-    .then(function(r) { return r.text(); })
-    .then(function(data) {
-      // Убираем HTML-теги, оставляем только чистый 3-дневный текст
-      var clean = data.replace(/<\/?[^>]+(>|$)/g, "");
-      document.getElementById('view').innerText = clean;
-    })
-    .catch(function() {
-      document.getElementById('view').innerText = 'Ошибка сети.';
-    });
-
-  // Авто-обновление раз в 3 часа
-  setTimeout(function(){ location.reload(); }, 10800000);
-</script>
-
-</body>
-</html>
+class handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        # Ваша ссылка собрана из коротких кусочков:
+        ч1 = "https://wttr.in"
+        ч2 = "~67.58"
+        ч3 = "%20"
+        ч4 = "31.15"
+        ч5 = "?lang=ru&M"
+        
+        full_url = ч1 + ч2 + ч3 + ч4 + ч5
+        
+        req = urllib.request.Request(
+            full_url, 
+            headers={'User-Agent': 'Mozilla/5.0'}
+        )
+        
+        try:
+            with urllib.request.urlopen(req) as response:
+                html = response.read().decode('utf-8')
+            
+            # Добавляем принудительный UTF-8, чтобы русский текст не ломался
+            if '<meta charset="UTF-8"' not in html:
+                html = html.replace("<head>", "<head><meta charset='UTF-8'>")
+                
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html; charset=utf-8')
+            self.end_headers()
+            self.wfile.write(html.encode('utf-8'))
+        except:
+            self.send_response(500)
+            self.end_headers()
+            self.wfile.write(b"Error loading weather data")
