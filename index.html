@@ -4,29 +4,24 @@
 <meta charset="UTF-8">
 <title>Погода в Ёнском</title>
 <style>
-  html,body{margin:0;padding:0;background:#000;color:#fff;font-family:monospace;}
-  pre{padding:20px;font-size:14px;white-space:pre;}
+  html,body{margin:0;padding:0;background:#000;text-align:center;}
+  img{max-width:100%;height:auto;padding-top:20px;}
 </style>
 </head>
 <body>
 
-<pre id="view">Загрузка трехдневного прогноза...</pre>
+<img id="pogoda">
 
 <script>
-  // Ссылка разбита на мелкие куски, чтобы не уходить за экран:
-  var ч1 = "https://io.";
+  // Ссылка разбита на ультра-короткие куски:
+  var ч1 = "https://";
   var ч2 = "wttr.in/";
   var шир = "67.58";
   var дол = "31.15";
-  var хвост = "?lang=ru&M";
+  var хв = ".png?lang=ru&M";
 
-  var url = ч1 + ч2 + шир + "," + дол + хвост;
-
-  fetch(url)
-    .then(r => r.text())
-    .then(data => {
-      document.getElementById('view').innerHTML = data;
-    });
+  var pic = document.getElementById('pogoda');
+  pic.src = ч1 + ч2 + шир + "," + дол + хв;
 </script>
 
 </body>
