@@ -13,12 +13,12 @@
 <img id="pogoda">
 
 <script>
-  // Ссылка разбита на ультра-короткие куски:
   var ч1 = "https://";
   var ч2 = "wttr.in/";
   var шир = "67.58";
   var дол = "31.15";
-  var хв = ".png?lang=ru&M";
+  // Добавили _3 для принудительных 3 дней:
+  var хв = "_3.png?lang=ru&M";
 
   var pic = document.getElementById('pogoda');
   pic.src = ч1 + ч2 + шир + "," + дол + хв;
